@@ -1,0 +1,21 @@
+/* reusable helper classes */
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.rounded-edges {
+  border-radius: 50px;
+}
+
+.rounded-hr {
+  border-width: 7px;
+  width: 30%;
+  margin: 0 auto;
+  color: #fff;
+  opacity: 0.6;
+}

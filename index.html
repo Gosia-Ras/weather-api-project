@@ -16,6 +16,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
     />
     <link rel="stylesheet" href="css/master.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -37,29 +38,32 @@
       <div class="container container--main rounded-edges">
         <div class="row">
           <div class="col-lg-7 container-form rounded-edges">
-            <label for="cars">Choose a city:</label>
-            <select id="citySelect">
-              <option value="Amsterdam">Amsterdam</option>
-              <option value="Ankara">Ankara</option>
-            </select>
-            <button id="fetchWeatherButton">Fetch Weather</button>
+            <h1 class="p-3">forecast</h1>
+            <div
+              class="d-flex justify-content-center align-content-center h-100 flex-column p-3"
+            >
+              <h2 class="mb-15">The only weather forecast you need</h2>
+              <hr class="rounded-edges rounded-hr" />
+              <label for="cars">Choose a city:</label>
+              <div>
+                <select id="citySelect">
+                  <option value="">Pick location</option>
+                </select>
+                <button id="fetchWeatherButton">Fetch Weather</button>
+              </div>
+            </div>
           </div>
           <div class="col-lg-5 d-flex flex-column justify-content-around p-3">
             <div class="d-flex flex-column">
-              <h2>Today <span>Date</span></h2>
-              <div class="card card--weather">
-                <p>Temp + type of weather</p>
-              </div>
+              <div id="weather--today"></div>
             </div>
             <div class="d-flex flex-column">
-              <h2>Daily</h2>
               <div id="weather"></div>
             </div>
           </div>
         </div>
       </div>
     </main>
-
     <footer>
       <div class="container">
         <div class="row">

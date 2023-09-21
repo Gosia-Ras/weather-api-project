@@ -1,0 +1,12 @@
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600 !important;
+  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5), 2px 2px 5px rgba(145, 144, 144, 0.4);
+}
+
+p {
+  font-size: 18px;
+}
