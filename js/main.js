@@ -2,9 +2,20 @@
 const weatherContainer = document.getElementById("weather");
 const select = document.getElementById("citySelect");
 const fetchButton = document.getElementById("fetchWeatherButton");
+const swiperContainer = document.querySelector(".swiper-container"); // Reference to Swiper container
 
 // Variable to store city data
 let cityData;
+
+// Initialize Swiper
+var swiper = new Swiper(".swiper-container", {
+  direction: "horizontal",
+  slidesPerView: 3.5,
+  spaceBetween: 15,
+  pagination: {
+    el: ".swiper-pagination",
+  },
+});
 
 // Event listener for the fetch button click
 fetchButton.addEventListener("click", fetchWeatherForSelectedCity);
@@ -39,6 +50,27 @@ function formatDate(yyyymmdd) {
   return `${day}-${month}-${year}`;
 }
 
+// Function to update Swiper content with new weather data
+function updateSwiper(data) {
+  var swiperWrapper = document.querySelector(".swiper-wrapper");
+  swiperWrapper.innerHTML = ""; // Clear existing content
+
+  data.dataseries.forEach((item) => {
+    const formattedDate = formatDate(item.date.toString());
+    const slide = document.createElement("div");
+    slide.className = "swiper-slide rounded-edges p-1 mt-15 mb-15";
+    slide.innerHTML = `
+      <p>Date: ${formattedDate}</p>
+      <p>Weather Type: ${item.weather}</p>
+      <p>Maximum Temperature: ${item.temp2m.max}</p>
+      <p>Minimum Temperature: ${item.temp2m.min}</p>
+    `;
+    swiperWrapper.appendChild(slide);
+  });
+
+  swiper.update(); // Update Swiper after changing content
+}
+
 // Function to fetch weather data for a specific city
 function getWeather(longitude, latitude, city, country) {
   const url = `https://www.7timer.info/bin/civillight.php?lon=${longitude}&lat=${latitude}&ac=0&unit=metric&output=json&tzshift=0`;
@@ -46,22 +78,13 @@ function getWeather(longitude, latitude, city, country) {
   return fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      let html = `<h3>Weather for: ${city}, ${country} </h3>`;
-
-      // Loop through weather data and build HTML content
-      data.dataseries.forEach((item) => {
-        const formattedDate = formatDate(item.date.toString());
-        html += `
-          <hr>
-          <p>Date: ${formattedDate}</p>
-          <p>Weather Type: ${item.weather}</p>
-          <p>Maximum Temperature: ${item.temp2m.max}</p>
-          <p>Minimum Temperature: ${item.temp2m.min}</p>
-        `;
-      });
+      let html = `<h3>Weather for: ${city}, ${country}</h3>`;
 
       // Display weather information in the weather container
       weatherContainer.innerHTML = html;
+
+      // Call the function to update Swiper content
+      updateSwiper(data);
     });
 }
 
