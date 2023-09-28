@@ -2,12 +2,25 @@
 @import "./utilities.css";
 @import "./typo.css";
 @import "./components/footer.css";
+@import "./components/results.css";
 
 /* general CSS */
 body {
   position: relative;
   height: 100%;
-  background: #919090 !important;
+  background-image: linear-gradient(to left, #bdbbbe 0%, #9d9ea3 100%),
+    radial-gradient(
+      88% 271%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(254, 254, 254, 0.25) 1%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    radial-gradient(
+      50% 100%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+  background-blend-mode: normal, lighten, soft-light;
   font-family: "Poppins", sans-serif !important;
   font-size: 14px;
   margin: 0;
@@ -21,7 +34,6 @@ main {
 main .container {
   background-color: #fff;
   overflow-x: hidden;
-  height: 75vh;
 }
 
 main .row:first-of-type {

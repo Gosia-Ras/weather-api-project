@@ -1,5 +1,6 @@
 // Get references to HTML elements
 const weatherContainer = document.getElementById("weather");
+const cityName = document.getElementById("cityName");
 const select = document.getElementById("citySelect");
 const fetchButton = document.getElementById("fetchWeatherButton");
 const swiperContainer = document.querySelector(".swiper-container"); // Reference to Swiper container
@@ -42,15 +43,45 @@ function populateSelect(cityData) {
   });
 }
 
-// Function to format date from YYYYMMDD to DD-MM-YYYY
 function formatDate(yyyymmdd) {
+  // Extract year, month, and day from the input string
   const year = yyyymmdd.substring(0, 4);
   const month = yyyymmdd.substring(4, 6);
   const day = yyyymmdd.substring(6, 8);
-  return `${day}-${month}-${year}`;
+
+  // Create a Date object from the extracted values
+  const date = new Date(`${year}-${month}-${day}`);
+
+  // Define options for formatting the date
+  const options = {
+    weekday: "long", // Full weekday name
+    day: "numeric", // Numeric day of the month
+    month: "long", // Full month name
+    year: "numeric", // Numeric year
+  };
+
+  // Format the date using toLocaleDateString
+  const formattedDate = date.toLocaleDateString(undefined, options);
+
+  return formattedDate;
 }
 
-// Function to update Swiper content with new weather data
+const weatherMapping = {
+  clear: "weather-icon-clear",
+  pcloudy: "weather-icon-pcloudy",
+  mcloudy: "weather-icon-mcloudy",
+  cloudy: "weather-icon-cloudy",
+  rain: "weather-icon-rain",
+  humid: "weather-icon-humid",
+  ishower: "weather-icon-shower",
+  lightrain: "weather-icon-lightrain",
+  oshower: "weather-icon-shower",
+  snow: "weather-icon-snow",
+  lightsnow: "weather-icon-snow",
+  ts: "weather-icon-thunderstorm",
+  rainsnow: "weather-icon-rainsnow",
+};
+
 function updateSwiper(data) {
   var swiperWrapper = document.querySelector(".swiper-wrapper");
   swiperWrapper.innerHTML = ""; // Clear existing content
@@ -58,13 +89,32 @@ function updateSwiper(data) {
   data.dataseries.forEach((item) => {
     const formattedDate = formatDate(item.date.toString());
     const slide = document.createElement("div");
-    slide.className = "swiper-slide rounded-edges p-1 mt-15 mb-15";
-    slide.innerHTML = `
-      <p>Date: ${formattedDate}</p>
-      <p>Weather Type: ${item.weather}</p>
-      <p>Maximum Temperature: ${item.temp2m.max}</p>
-      <p>Minimum Temperature: ${item.temp2m.min}</p>
+
+    slide.className =
+      "swiper-slide rounded-edges p-1 mt-15 mb-15 d-flex flex-column justify-content-around";
+
+    // Create a <p> element for the weather text
+    const weatherDiv = document.createElement("div");
+
+    // Create a <span> element for the weather icon
+    const weatherIcon = document.createElement("span");
+    weatherIcon.className = "weather-icon";
+
+    const weatherIconClass = weatherMapping[item.weather];
+    if (weatherIconClass) {
+      weatherIcon.classList.add(weatherIconClass);
+    }
+
+    // Append the weather icon to the weather paragraph
+    weatherDiv.appendChild(weatherIcon);
+
+    slide.appendChild(weatherDiv);
+    slide.innerHTML += `
+      <p>Max: <strong>${item.temp2m.max}</strong></p>
+      <p>Min: <strong>${item.temp2m.min}</strong></p>
+      <p class="small">${formattedDate}</p>
     `;
+
     swiperWrapper.appendChild(slide);
   });
 
@@ -78,12 +128,8 @@ function getWeather(longitude, latitude, city, country) {
   return fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      let html = `<h3>Weather for: ${city}, ${country}</h3>`;
-
-      // Display weather information in the weather container
-      weatherContainer.innerHTML = html;
-
-      // Call the function to update Swiper content
+      let html = `<h3>Daily weather for: ${city}, ${country}</h3>`;
+      cityName.innerHTML = html;
       updateSwiper(data);
     });
 }
