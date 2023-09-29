@@ -11,13 +11,20 @@ let cityData;
 // Initialize Swiper
 var swiper = new Swiper(".swiper-container", {
   direction: "horizontal",
-  slidesPerView: 3.5,
   spaceBetween: 15,
   navigation: {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
   },
   watchSlidesProgress: true,
+  breakpoints: {
+    640: {
+      slidesPerView: 2,
+    },
+    992: {
+      slidesPerView: 3.5,
+    },
+  },
 });
 
 // Event listener for the fetch button click
