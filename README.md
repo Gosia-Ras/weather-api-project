@@ -28,6 +28,10 @@ Here are some of the key methods and functions used in the project code:
 
 6. **fetchWeatherForSelectedCity()**: This function is called when the user clicks the "Fetch Weather" button. It retrieves the selected city's information from the city data and then calls `getWeather` to fetch and display weather data for that city.
 
+## App Screenshot
+
+![App Screenshot](https://github.com/Gosia-Ras/weather-api-project/blob/e6f0be6a447a94460924a8b4dc79d8624d4fff23/Screenshot%202023-09-29%20124908.png)
+
 ## Getting Started
 
 To explore this project and its functionalities, follow these steps:
