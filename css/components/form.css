@@ -1,6 +1,6 @@
 .container-form {
   filter: saturate(0.5);
-  background-image: url("/images/AdobeStock_133665786.jpeg");
+  background-image: url("../../images/AdobeStock_133665786.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   color: #e6e6e6 !important;
